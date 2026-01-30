@@ -1,0 +1,42 @@
+[
+  {
+    "id": "DIS-001",
+    "type": "Weather",
+    "description": "Pacific Typhoon",
+    "location": {
+      "lat": 32.0,
+      "lon": -160.0
+    },
+    "radius_km": 500,
+    "affected_modes": [
+      "Sea",
+      "Air"
+    ]
+  },
+  {
+    "id": "DIS-002",
+    "type": "Labor Strike",
+    "description": "Labor Strike at Singapore Port",
+    "location": {
+      "lat": 1.290270,
+      "lon": 103.851959
+    },
+    "radius_km": 200,
+    "affected_modes": [
+      "Sea"
+    ]
+  },
+  {
+    "id": "DIS-INLAND-001",
+    "type": "Weather",
+    "description": "Midwest Blizzard (Inland Challenge)",
+    "location": {
+      "lat": 38.0,
+      "lon": -89.0
+    },
+    "radius_km": 400,
+    "affected_modes": [
+      "Truck"
+    ]
+  }
+]

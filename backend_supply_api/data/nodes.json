@@ -1,0 +1,102 @@
+[
+  {
+    "id": "PORT-SHA",
+    "name": "Shanghai Port",
+    "type": "Port",
+    "location": {
+      "lat": 31.2304,
+      "lon": 121.4737
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "PORT-LAX",
+    "name": "Los Angeles Port",
+    "type": "Port",
+    "location": {
+      "lat": 34.0522,
+      "lon": -118.2437
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "PORT-SIN",
+    "name": "Singapore Port",
+    "type": "Port",
+    "location": {
+      "lat": 1.290270,
+      "lon": 103.851959
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "PORT-RTM",
+    "name": "Rotterdam Port",
+    "type": "Port",
+    "location": {
+      "lat": 51.9244,
+      "lon": 4.4777
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "PORT-NYC",
+    "name": "Port of New York",
+    "type": "Port",
+    "location": {
+      "lat": 40.7128,
+      "lon": -74.0060
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "WH-DEN",
+    "name": "Denver Distribution Center",
+    "type": "Warehouse",
+    "location": {
+      "lat": 39.7392,
+      "lon": -104.9903
+    },
+    "capacity_tier": 2
+  },
+  {
+    "id": "DC-DAL-01",
+    "name": "Dallas Distribution Center",
+    "type": "Warehouse",
+    "location": {
+      "lat": 32.7767,
+      "lon": -96.7970
+    },
+    "capacity_tier": 2
+  },
+  {
+    "id": "DC-CHI-01",
+    "name": "Chicago Distribution Center",
+    "type": "Warehouse",
+    "location": {
+      "lat": 41.8781,
+      "lon": -87.6298
+    },
+    "capacity_tier": 2
+  },
+  {
+    "id": "STORE-001",
+    "name": "Target Minneapolis",
+    "type": "Store",
+    "location": {
+      "lat": 44.9778,
+      "lon": -93.2650
+    },
+    "capacity_tier": 3
+  },
+  {
+    "id": "STORE-ATL-01",
+    "name": "Target Atlanta",
+    "type": "Store",
+    "location": {
+      "lat": 33.7490,
+      "lon": -84.3880
+    },
+    "capacity_tier": 3
+  }
+]

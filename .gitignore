@@ -1,0 +1,24 @@
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Javascript
+node_modules/
+dist/
+build/
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Backend Data (Optional: Do you want to version the JSON data? Usually yes for this hackathon)
+# backend_supply_api/data/shipments.json <-- Keep this versioned so you can "reset" easily
+
+# ADK
+.adk/
+agents.egg-info/

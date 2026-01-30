@@ -1,0 +1,26 @@
+[
+  {
+    "sku": "GROC-PER-005",
+    "name": "Premium Coffee",
+    "unit_value": 15.00,
+    "is_seasonal": false
+  },
+  {
+    "sku": "ELEC-GAME-001",
+    "name": "PlayStation 5 Pro",
+    "unit_value": 499.99,
+    "is_seasonal": true
+  },
+  {
+    "sku": "CLOTH-TSHIRT-001",
+    "name": "Basic Cotton T-Shirt",
+    "unit_value": 5.00,
+    "is_seasonal": false
+  },
+  {
+    "sku": "TOY-HOLIDAY-001",
+    "name": "Holiday Action Figure",
+    "unit_value": 25.00,
+    "is_seasonal": true
+  }
+]

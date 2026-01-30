@@ -1,0 +1,443 @@
+[
+  {
+    "id": "SH-1002",
+    "status": "Stuck",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 1.150000,
+      "lon": 104.100000
+    },
+    "origin_id": "PORT-SIN",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "GROC-PER-005",
+        "quantity": 2800
+      }
+    ],
+    "total_value_at_risk": 500000.0
+  },
+  {
+    "id": "SH-1001",
+    "status": "Stuck",
+    "transport_mode": "Sea",
+    "priority": "Critical",
+    "current_location": {
+      "lat": 32.1,
+      "lon": -160.1
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "ELEC-GAME-001",
+        "quantity": 1000
+      },
+      {
+        "sku": "TOY-HOLIDAY-001",
+        "quantity": 500
+      }
+    ],
+    "total_value_at_risk": 2500000.0
+  },
+  {
+    "id": "SH-CHI-ATL",
+    "status": "Delayed",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 39.5,
+      "lon": -88.5
+    },
+    "origin_id": "DC-CHI-01",
+    "destination_id": "STORE-ATL-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 2000
+      }
+    ],
+    "total_value_at_risk": 10000.0
+  },
+  {
+    "id": "SH-DEN-CHI",
+    "status": "In-Transit",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 40.5,
+      "lon": -95.0
+    },
+    "origin_id": "WH-DEN",
+    "destination_id": "DC-CHI-01",
+    "contents": [
+      {
+        "sku": "GROC-PER-005",
+        "quantity": 5000
+      }
+    ],
+    "total_value_at_risk": 60000.0
+  },
+  {
+    "id": "SH-GEN-200",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 38.42039492958342,
+      "lon": -151.94465842742784
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 711
+      }
+    ],
+    "total_value_at_risk": 165803.0
+  },
+  {
+    "id": "SH-GEN-201",
+    "status": "In-Transit",
+    "transport_mode": "Air",
+    "priority": "Critical",
+    "current_location": {
+      "lat": 50.20466470221093,
+      "lon": -81.52964647966303
+    },
+    "origin_id": "PORT-NYC",
+    "destination_id": "DC-CHI-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 402
+      }
+    ],
+    "total_value_at_risk": 146948.0
+  },
+  {
+    "id": "SH-GEN-202",
+    "status": "In-Transit",
+    "transport_mode": "Air",
+    "priority": "Critical",
+    "current_location": {
+      "lat": 36.04024514119002,
+      "lon": -64.34147233409166
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 714
+      }
+    ],
+    "total_value_at_risk": 104813.0
+  },
+  {
+    "id": "SH-GEN-203",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 37.04789282551495,
+      "lon": -142.15326550452392
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 661
+      }
+    ],
+    "total_value_at_risk": 127231.0
+  },
+  {
+    "id": "SH-GEN-205",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 30.859343385368234,
+      "lon": -136.6532450249906
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 480
+      }
+    ],
+    "total_value_at_risk": 76981.0
+  },
+  {
+    "id": "SH-GEN-206",
+    "status": "In-Transit",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 34.9315420249891,
+      "lon": -93.38385816044317
+    },
+    "origin_id": "DC-DAL-01",
+    "destination_id": "STORE-ATL-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 381
+      }
+    ],
+    "total_value_at_risk": 180770.0
+  },
+  {
+    "id": "SH-GEN-207",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 36.44757186499844,
+      "lon": -144.88993991469908
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 500
+      }
+    ],
+    "total_value_at_risk": 139127.0
+  },
+  {
+    "id": "SH-GEN-208",
+    "status": "In-Transit",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 42.04529687684633,
+      "lon": -109.25240295971079
+    },
+    "origin_id": "STORE-ATL-01",
+    "destination_id": "STORE-001",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 906
+      }
+    ],
+    "total_value_at_risk": 70025.0
+  },
+  {
+    "id": "SH-GEN-209",
+    "status": "In-Transit",
+    "transport_mode": "Air",
+    "priority": "Critical",
+    "current_location": {
+      "lat": 51.87024850925222,
+      "lon": -40.89803297209092
+    },
+    "origin_id": "PORT-SIN",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 504
+      }
+    ],
+    "total_value_at_risk": 93476.0
+  },
+  {
+    "id": "SH-GEN-210",
+    "status": "In-Transit",
+    "transport_mode": "Air",
+    "priority": "Critical",
+    "current_location": {
+      "lat": 31.650415312798554,
+      "lon": -87.93120493400588
+    },
+    "origin_id": "PORT-SIN",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 858
+      }
+    ],
+    "total_value_at_risk": 177383.0
+  },
+  {
+    "id": "SH-GEN-211",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 27.450013142918955,
+      "lon": -137.91231326432865
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 471
+      }
+    ],
+    "total_value_at_risk": 19755.0
+  },
+  {
+    "id": "SH-GEN-212",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 23.178627926365095,
+      "lon": -139.7925562767555
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 752
+      }
+    ],
+    "total_value_at_risk": 141299.0
+  },
+  {
+    "id": "SH-GEN-213",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 23.536416009891123,
+      "lon": -154.5301170790902
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 891
+      }
+    ],
+    "total_value_at_risk": 85283.0
+  },
+  {
+    "id": "SH-GEN-214",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 40.56535672229148,
+      "lon": -150.11861014404224
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-NYC",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 850
+      }
+    ],
+    "total_value_at_risk": 189381.0
+  },
+  {
+    "id": "SH-GEN-215",
+    "status": "Delayed",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 36.1627,
+      "lon": -86.7816
+    },
+    "origin_id": "STORE-001",
+    "destination_id": "STORE-ATL-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 107
+      }
+    ],
+    "total_value_at_risk": 91141.0
+  },
+  {
+    "id": "SH-GEN-216",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 40.557102626892664,
+      "lon": -155.78669793486029
+    },
+    "origin_id": "PORT-SHA",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 362
+      }
+    ],
+    "total_value_at_risk": 48080.0
+  },
+  {
+    "id": "SH-GEN-217",
+    "status": "In-Transit",
+    "transport_mode": "Rail",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 41.2,
+      "lon": -81.0
+    },
+    "origin_id": "PORT-NYC",
+    "destination_id": "DC-CHI-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 522
+      }
+    ],
+    "total_value_at_risk": 54473.0
+  },
+  {
+    "id": "SH-GEN-218",
+    "status": "In-Transit",
+    "transport_mode": "Truck",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 34.37909086687157,
+      "lon": -99.55193921148198
+    },
+    "origin_id": "WH-DEN",
+    "destination_id": "DC-DAL-01",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 432
+      }
+    ],
+    "total_value_at_risk": 64786.0
+  },
+  {
+    "id": "SH-GEN-219",
+    "status": "In-Transit",
+    "transport_mode": "Sea",
+    "priority": "Normal",
+    "current_location": {
+      "lat": 22.517258702277818,
+      "lon": -149.65078333354666
+    },
+    "origin_id": "PORT-RTM",
+    "destination_id": "PORT-LAX",
+    "contents": [
+      {
+        "sku": "CLOTH-TSHIRT-001",
+        "quantity": 394
+      }
+    ],
+    "total_value_at_risk": 135019.0
+  }
+]
