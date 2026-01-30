@@ -126,9 +126,16 @@ Executes the decision and updates the simulation state.
     }
     ```
 *   **Effect**:
-    1.  Updates Shipment Status -> `In-Transit`.
-    2.  Updates Shipment Mode -> `Air`.
-    3.  Updates Simulation -> Shipment starts moving again!
+*   **Effect**:
+    1.  **Mode Change or Replacement (Clone)**:
+        *   If `new_mode` != `current_mode` (e.g., Sea -> Air, Truck -> Air) OR if it is a Replacement:
+        *   Creates a **New Shipment** (`In-Transit`) with ID `SH-1001-MODE-RESCUE-xyz`.
+        *   Updates **Old Shipment** Status -> `Mitigated`.
+        *   Returns `{ "new_shipment_id": "..." }`.
+    2.  **Same Mode Reroute (Mutate)**:
+        *   If mode is unchanged (e.g., Sea -> Sea Divert):
+        *   Updates existing Shipment Status -> `In-Transit`.
+    3.  Updates Simulation -> Goods start moving again!
 
 ---
 

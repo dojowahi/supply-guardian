@@ -21,7 +21,7 @@ interface LeafletMapProps {
 }
 
 const getShipmentIcon = (mode: string, status: string) => {
-  const color = status === 'Stuck' ? '#cc0000' : status === 'Delayed' ? '#eab308' : '#22c55e';
+  const color = status === 'Stuck' ? '#cc0000' : status === 'Delayed' ? '#eab308' : status === 'In-Transit' ? '#22c55e' : '#8B4513';
 
   // Simplified SVG for brevity, using circles/shapes
   let iconHtml = '';
@@ -128,7 +128,7 @@ export function LeafletMap({ nodes, shipments, disruptions }: LeafletMapProps) {
               <div className="text-gray-900 min-w-[180px]">
                 <div className="flex justify-between items-center border-b border-gray-200 pb-1 mb-2">
                   <strong className="text-sm">{s.id}</strong>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded text-white ${s.status === 'Stuck' ? 'bg-red-500' : s.status === 'Delayed' ? 'bg-yellow-500' : 'bg-green-500'
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded text-white ${s.status === 'Stuck' ? 'bg-red-500' : s.status === 'Delayed' ? 'bg-yellow-500' : s.status === 'In-Transit' ? 'bg-green-500' : 'bg-[#8B4513]'
                     }`}>{s.status}</span>
                 </div>
 
