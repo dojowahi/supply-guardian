@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List, Optional
 from sqlmodel import Session, select
 from ..database import get_session
@@ -13,6 +13,13 @@ async def get_shipments(status: Optional[str] = None, session: Session = Depends
     if status:
         query = query.where(Shipment.status == status)
     return session.exec(query).all()
+
+@router.get("/shipments/{shipment_id}", response_model=Shipment)
+async def get_shipment(shipment_id: str, session: Session = Depends(get_session)):
+    shipment = session.exec(select(Shipment).where(Shipment.id == shipment_id)).first()
+    if not shipment:
+        raise HTTPException(status_code=404, detail="Shipment not found")
+    return shipment
 
 @router.get("/products", response_model=List[Product])
 async def get_products(session: Session = Depends(get_session)):

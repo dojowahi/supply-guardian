@@ -347,7 +347,7 @@
   },
   {
     "id": "SH-GEN-215",
-    "status": "Delayed",
+    "status": "Stuck",
     "transport_mode": "Truck",
     "priority": "Normal",
     "current_location": {
@@ -385,7 +385,7 @@
   },
   {
     "id": "SH-GEN-217",
-    "status": "In-Transit",
+    "status": "Stuck",
     "transport_mode": "Rail",
     "priority": "Normal",
     "current_location": {

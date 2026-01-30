@@ -50,8 +50,10 @@ backend_supply_api/
 
 Generate realistic seed data for `data/` folder.
 
-**1. `nodes.json` (~10 items)**:
-*   Mix of `Port` (LAX, Shanghai, Singapore, Rotterdam), `Warehouse` (Denver, Chicago, Dallas), and `Store` (Atlanta, Minneapolis).
+**1. `nodes.json` (~14 items)**:
+*   **Ports**: LAX (`PORT-LAX`), Shanghai (`PORT-SHA`), Singapore (`PORT-SIN`), Rotterdam (`PORT-RTM`), Qingdao (`PORT-QING`), Santos (`PORT-STS`).
+*   **Warehouses**: Denver (`WH-DEN`), Chicago (`DC-CHI-01`), Dallas (`DC-DAL-01`), Miami (`DC-MIA-01`).
+*   **Stores**: Atlanta (`STORE-ATL-01`), Minneapolis (`STORE-001`), Seattle (`STORE-SEA-01`).
 *   Include realistic `lat/lon`.
 
 **2. `products.json` (~5 items)**:

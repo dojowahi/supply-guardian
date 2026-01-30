@@ -98,5 +98,45 @@
       "lon": -84.3880
     },
     "capacity_tier": 3
+  },
+  {
+    "id": "PORT-QING",
+    "name": "Qingdao Port",
+    "type": "Port",
+    "location": {
+      "lat": 36.0671,
+      "lon": 120.3826
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "PORT-STS",
+    "name": "Port of Santos",
+    "type": "Port",
+    "location": {
+      "lat": -23.9618,
+      "lon": -46.3322
+    },
+    "capacity_tier": 1
+  },
+  {
+    "id": "DC-MIA-01",
+    "name": "Miami Distribution Center",
+    "type": "Warehouse",
+    "location": {
+      "lat": 25.7617,
+      "lon": -80.1918
+    },
+    "capacity_tier": 2
+  },
+  {
+    "id": "STORE-SEA-01",
+    "name": "Target Seattle",
+    "type": "Store",
+    "location": {
+      "lat": 47.6062,
+      "lon": -122.3321
+    },
+    "capacity_tier": 3
   }
 ]
