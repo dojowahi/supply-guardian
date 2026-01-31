@@ -31,10 +31,16 @@ def run_test():
     # 1. TEST SEA -> AIR (SH-1001)
     log("\n[TEST 1] Sea -> Air (SH-1001)", "blue")
     quotes = httpx.get(f"{BASE_URL}/actions/quotes/SH-1001").json()
-    air_option = next((o for o in quotes["options"] if "AIR" in o["id"] and "REPLACEMENT" not in o["id"]), None)
-    # Actually logic says "Expedite Air" is allowed.
-    if not air_option:
-        air_option = next((o for o in quotes["options"] if "AIR" in o["id"]), None)
+    
+    # Verify "Unload & Fly" is GONE
+    unload_opt = next((o for o in quotes["options"] if "OPT-AIR-EXPEDITED" == o["id"]), None)
+    if unload_opt:
+         log("FAILURE: OPT-AIR-EXPEDITED should be hidden for Typhoon!", "red")
+    else:
+         log("VERIFIED: OPT-AIR-EXPEDITED is hidden (Correct).", "green")
+
+    # Select Replacement Air
+    air_option = next((o for o in quotes["options"] if "OPT-REPLACEMENT-AIR" == o["id"]), None)
         
     log(f"Selected Option: {air_option['id']}", "white")
     

@@ -10,4 +10,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      '/network': 'http://localhost:8000',
+      '/shipments': 'http://localhost:8000',
+      '/products': 'http://localhost:8000',
+      '/actions': 'http://localhost:8000',
+    }
+  }
 })

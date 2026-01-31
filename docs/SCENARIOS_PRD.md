@@ -11,11 +11,12 @@ This document defines the core logistics scenarios, disruption types, and the sp
 *   **Logic Constraints**:
     *   Ship cannot move forward.
     *   "Sea Reroute" is too slow (10+ days).
+    *   **"Unload & Fly" is IMPOSSIBLE** (cannot unload ship in a typhoon).
 *   **Available Resolutions**:
-    1.  **Expedite Air (Winner)**:
-        *   *Action*: `OPT-AIR-EXPEDITED`
+    1.  **Emergency Replacement Air (Winner)**:
+        *   *Action*: `OPT-REPLACEMENT-AIR`
         *   *System Effect*: **CLONE & RESCUE**.
-        *   *Result*: Original shipment `Mitigated`. New Air shipment created starting from **Origin Port** (simulating new stock sent via air).
+        *   *Result*: Original `Mitigated`. New Air shipment created from **Origin Port**.
     2.  **Sea Reroute (Loser)**:
         *   *Action*: `OPT-SEA-REROUTE`
         *   *System Effect*: **MUTATE**.

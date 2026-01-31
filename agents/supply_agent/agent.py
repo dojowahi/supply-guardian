@@ -1,48 +1,41 @@
 
-from google.adk.agents import LlmAgent
-from . import tools
+import logging
+from google.adk.agents import Agent
+from .sub_agents import (
+    investigative_agent,
+    strategize_agent,
+    consult_and_execute_agent
+)
 
-# Define the instruction with a strictly enforced Human-in-the-Loop protocol
-INSTRUCTION = """
-You are the Supply Chain Controller Agent. Your goal is to resolve "Stuck" shipments in the supply chain.
+# --- Logging ---
+logger = logging.getLogger(__name__)
 
-You must follow this STRICT "Resolution Pipeline" for every request:
+# --- Root Agent ---
 
-1. **INVESTIGATE**:
-   - First, use `get_stuck_shipments()` to see what is blocked.
-   - Use `get_disruption_context()` to understand the active disruptions (strikes, weather, etc.).
-   - Use `get_products()` to check the value and seasonality of the goods inside the shipment.
-   - Synthesize this info: Why is it stuck? Is it high value? Is it urgent?
-
-2. **STRATEGIZE**:
-   - Use `get_action_quotes(shipment_id)` to find alternative routes.
-   - Compare the options.
-     - High Value / Critical -> Prefer Speed (Air).
-     - Low Value / Not Urgent -> Prefer Cost (Sea/Rail).
-   - Formulate a recommendation (e.g., "I recommend Option A because...").
-
-3. **CONSULT (Human-in-the-Loop)**:
-   - **STOP** and present your findings and recommendation to the user.
-   - **WAIT** for the user to say "Approve", "Yes", or give a different instruction.
-   - **DO NOT** execute the reroute until you get explicit confirmation.
-
-4. **EXECUTE**:
-   - Only *after* confirmation, use `apply_reroute(shipment_id, new_route_id)`.
-   - Confirm the success to the user.
-
-If the user rejects your plan, ask for guidance or propose the next best option.
-"""
-
-# Define the Agent
-root_agent = LlmAgent(
-    name="supply_chain_controller",
-    model="gemini-2.5-flash",  # Using a capable fast model
-    instruction=INSTRUCTION,
-    tools=[
-        tools.get_stuck_shipments,
-        tools.get_disruption_context,
-        tools.get_action_quotes,
-        tools.apply_reroute,
-        tools.get_products
+root_agent = Agent(
+    name="supply_chain_crisis_agent",
+    model="gemini-2.5-flash",
+    description="Orchestrates the resolution of supply chain crises.",
+    instruction="""
+    You are the Supply Chain Crisis Agent.
+    You manage a team of specialist agents to resolve supply chain issues.
+    
+    Your Standard Operating Procedure (SOP):
+    
+    1. **Investigate**: Call the `investigative_agent` to find stuck shipments and present them.
+    2. **Wait for Selection**: Ensure a shipment is selected.
+    3. **Strategize**: Call the `strategize_agent` to analyze options and propose a solution.
+    4. **Consult & Execute**: 
+       - Present the strategy to the user.
+       - Ask for confirmation ("Do you want to proceed?").
+       - **Only after** the user replies, call the `consult_and_execute_agent`.
+         (This sequence will verify the approval and execute the reroute).
+    
+    Always guide the user through this pipeline step-by-step.
+    """,
+    sub_agents=[
+        investigative_agent,
+        strategize_agent,
+        consult_and_execute_agent
     ]
 )

@@ -30,6 +30,8 @@ async def get_quotes(shipment_id: str, session: Session = Depends(get_session)):
     val = shipment.total_value_at_risk
     options = []
     
+    disruptions = session.exec(select(Disruption)).all()
+
     # --- LOGIC BRANCH: INLAND (Truck/Rail) vs OCEAN (Sea/Air) ---
     is_inland = shipment.transport_mode in ["Truck", "Rail"]
     
@@ -49,7 +51,7 @@ async def get_quotes(shipment_id: str, session: Session = Depends(get_session)):
         # Find all Warehouses
         warehouses = session.exec(select(Node).where(Node.type == "Warehouse")).all()
         
-        # Find closest one
+        # Find closest one THAT IS NOT DISRUPTED
         nearest_wh = None
         min_dist = 999999
         
@@ -57,6 +59,18 @@ async def get_quotes(shipment_id: str, session: Session = Depends(get_session)):
             # Prevent shipping from the destination itself!
             if wh.id == shipment.destination_id:
                 continue
+            
+            # CHECK DISRUPTIONS FOR THIS WAREHOUSE
+            wh_disrupted = False
+            for d in disruptions:
+                if "Truck" in d.affected_modes:
+                    dist_to_disruption = calculate_distance_km(wh.location, d.location)
+                    if dist_to_disruption <= d.radius_km:
+                        wh_disrupted = True
+                        break
+            
+            if wh_disrupted:
+                continue # Skip this warehouse
                 
             dist = calculate_distance_km(wh.location, shipment.current_location)
             if dist < min_dist:
@@ -84,7 +98,6 @@ async def get_quotes(shipment_id: str, session: Session = Depends(get_session)):
         sea_cost = int(val * 0.001 + 500)
         replacement_cost = int(air_cost * 1.2) 
 
-        disruptions = session.exec(select(Disruption)).all()
         active_disruption = next((d for d in disruptions if 
                                   calculate_distance_km(d.location, shipment.current_location) <= d.radius_km), None)
         
@@ -106,13 +119,14 @@ async def get_quotes(shipment_id: str, session: Session = Depends(get_session)):
                  "description": "Fly stock from backup supplier in Shanghai"
             })
         else:
-            options.append({
-                "id": "OPT-AIR-EXPEDITED",
-                "type": "Expedite (Air) - Unload & Fly",
-                "cost_usd": air_cost,
-                "transit_time_hours": 24,
-                "co2_kg": 1500.0
-            })
+            if not active_disruption:
+                options.append({
+                    "id": "OPT-AIR-EXPEDITED",
+                    "type": "Expedite (Air) - Unload & Fly",
+                    "cost_usd": air_cost,
+                    "transit_time_hours": 24,
+                    "co2_kg": 1500.0
+                })
             options.append({
                 "id": "OPT-SEA-REROUTE",
                 "type": "Reroute (Sea) - Divert Ship",
