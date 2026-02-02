@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retail AI Hackathon: Supply Chain Guardian</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #1a73e8;
+      margin-top: 2rem;
+    }
+
+    h1 {
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+
+    code {
+      background-color: #f5f5f5;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .track {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      background-color: #fafafa;
+    }
+
+    .track h3 {
+      margin-top: 0;
+    }
+
+    blockquote {
+      border-left: 4px solid #1a73e8;
+      margin: 0;
+      padding-left: 1rem;
+      font-style: italic;
+      color: #555;
+    }
+
+    @media print {
+      body {
+        max-width: 100%;
+        padding: 0.5cm;
+      }
+
+      a[href]::after {
+        content: " (" attr(href) ")";
+      }
+
+      .track {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Retail AI Hackathon: Supply Chain Guardian</h1>
+
+  <p>Welcome, Builders! 🚀</p>
+
+  <p>Your mission, should you choose to accept it, is to save the world's supply chain from chaos. We have provided you
+    with a live <strong>Supply Chain Data API</strong>. Your goal is to build a solution—spanning from visualization to
+    autonomous AI decision-making—to navigate a series of simulated crises (strikes, weather events, pirate attacks).
+  </p>
+
+  <h2>🛠️ Your Toolbox</h2>
+
+  <h3>1. The Data Core (Backend API)</h3>
+  <p>You are given a fully functional Backend API. This is your source of truth.</p>
+  <ul>
+    <li><strong>Base URL:</strong> <code>https://backend-supply-api-926877739989.us-central1.run.app</code></li>
+    <li><strong>Interactive Docs (Swagger):</strong> <a
+        href="https://backend-supply-api-926877739989.us-central1.run.app/docs">View API Docs</a></li>
+  </ul>
+
+  <p><strong>Key Endpoints:</strong></p>
+  <ul>
+    <li><code>GET /shipments</code>: List all active shipments (look for <code>status="Stuck"</code>!).</li>
+    <li><code>GET /network/ports</code>: Get the geo-locations of all global ports.</li>
+    <li><code>GET /actions/reroute</code>: (Simulation) Calculate costs to move goods from Port A to Port B.</li>
+  </ul>
+
+  <h3>2. The Assistant (AI Pair Programmer)</h3>
+  <p>You will be using <strong>Gemini CLI</strong> or <strong>Antigravity</strong> to accelerate your development. Use
+    it to:</p>
+  <ul>
+    <li>Scaffold your React/Python projects instantly.</li>
+    <li>Generate complex API-calling code.</li>
+    <li>Debug errors in real-time.</li>
+  </ul>
+
+  <hr>
+
+  <h2>🚦 Choose Your Path</h2>
+  <p>Select one of the following tracks based on your team's strengths.</p>
+
+  <div class="track">
+    <h3>Path 1: The Visibility Engine (Frontend Focus) 🌍</h3>
+    <blockquote>"You can't fix what you can't see."</blockquote>
+    <p>Active tracking of global freight is currently a spreadsheet nightmare. Your job is to bring it to life.</p>
+    <ul>
+      <li><strong>The Goal:</strong> Build a Supply Chain UI Dashboard.</li>
+      <li><strong>Core Requirements:</strong>
+        <ol>
+          <li><strong>Interactive Map:</strong> Use the <code>/network/ports</code> data to plot ports on a world map
+            (suggested: Leaflet or Mapbox).</li>
+          <li><strong>Shipment Tracking:</strong> Visualize shipment routes. Color-code them (e.g., 🔴 for Stuck, 🟢 for
+            Moving).</li>
+          <li><strong>The "Red Phone":</strong> Create a prominent alert section for shipments that are
+            <code>Delayed</code> or <code>Stuck</code>.</li>
+        </ol>
+      </li>
+      <li><strong>Tech Stack:</strong> React, Vite, TailwindCSS (Recommended).</li>
+    </ul>
+  </div>
+
+  <div class="track">
+    <h3>Path 2: The Crisis Analyst (Agent Focus) 🧠</h3>
+    <blockquote>"Data without insight is just noise."</blockquote>
+    <p>The dashboard shows a problem, but what's the solution? Your agent will be the brain.</p>
+    <ul>
+      <li><strong>The Goal:</strong> Build a "Supply Chain Crisis Agent" driven by an LLM (Gemini).</li>
+      <li><strong>Core Requirements:</strong>
+        <ol>
+          <li><strong>Investigative Skill:</strong> The agent effectively queries the <code>GET /shipments</code> API to
+            find problems without human prompting.</li>
+          <li><strong>Strategic Reasoning:</strong> When a shipment is stuck at "Port of Singapore", the agent checks
+            available routes and uses <code>GET /actions/reroute</code> to find alternatives.</li>
+          <li><strong>Decision Support:</strong> The agent presents a clear recommendation: <em>"Reroute Shipment #123
+              via Air Freight to Tokyo ($5k cost, +2 days vs Sea Freight)."</em></li>
+        </ol>
+      </li>
+      <li><strong>Tech Stack:</strong> Python, Google Gen AI SDK / Vertex AI.</li>
+    </ul>
+  </div>
+
+  <div class="track">
+    <h3>Path 3: The Command Center (Full Stack Integration) 🚀</h3>
+    <blockquote>"The Ultimate Guardian."</blockquote>
+    <p>Combine visibility and intelligence into a unified command center. This is the hardest and most rewarding path.
+    </p>
+    <ul>
+      <li><strong>The Goal:</strong> An interactive UI where the AI Agent lives alongside the data.</li>
+      <li><strong>Core Requirements:</strong>
+        <ol>
+          <li><strong>Context-Aware Chat:</strong> When a user clicks a red dot on the map, the Agent sidebar opens
+            <em>already knowing</em> the context of that shipment.</li>
+          <li><strong>Human-in-the-Loop:</strong> The Agent proposes a reroute; the User clicks "Approve"; the UI
+            updates to show the new route instantly.</li>
+          <li><strong>Seamless Experience:</strong> No copy-pasting JSON. The Agent calls the API, and the UI reflects
+            the changes.</li>
+        </ol>
+      </li>
+      <li><strong>Tech Stack:</strong> React Frontend + Python Agent Backend (FastAPI/Flask or Google ADK).</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h2>🏆 Winning Criteria</h2>
+  <ol>
+    <li><strong>Utility:</strong> Does it actually help a logistics manager solve a problem?</li>
+    <li><strong>Aesthetics:</strong> Does the UI look modern and professional? (No default browser buttons!)</li>
+    <li><strong>Agent Logic:</strong> Does the AI hallucinate routes, or does it ground its answers in the provided API
+      data?</li>
+    <li><strong>Integration:</strong> (Path 3) How smooth is the hand-off between UI and AI?</li>
+  </ol>
+
+  <p style="margin-top: 2rem; font-weight: bold; text-align: center;">Good luck, Guardians! The supply chain is counting
+    on you.</p>
+
+  <footer
+    style="margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: center; color: #888; font-size: 0.9em;">
+    Created by ankurwahi
+  </footer>
+
+</body>
+
+</html>
