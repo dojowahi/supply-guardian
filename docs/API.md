@@ -4,9 +4,11 @@ Welcome to the **Target Supply Guardian Hackathon**. This document serves as you
 
 ---
 
-## 🌍 generated Data Models (The "World State")
+## 🌍 Generated Data Models (The "World State")
 
 The simulation runs on a set of interconnected JSON datasets found in `backend_supply_chain/data/`.
+
+> **Note on Persistence**: The backend uses an in-memory or ephemeral SQLite database (`database.db`). On Cloud Run, this database is **reset to the initial JSON seed data** every time a new revision is deployed or the container restarts. We have explicitly excluded `database.db` from the Docker build (via `.dockerignore`) to enforce this "clean slate" behavior.
 
 ### 1. ⚓ Nodes (`nodes.json`)
 Represents the physical infrastructure of the supply chain network.

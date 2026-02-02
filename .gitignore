@@ -22,3 +22,8 @@ build/
 # ADK
 .adk/
 agents.egg-info/
+
+# Deployment
+.deploy.env
+.deploy_state
+deploy.log

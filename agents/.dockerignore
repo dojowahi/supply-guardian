@@ -6,4 +6,8 @@ __pycache__
 *.pyc
 .adk
 agents.egg-info
+*.egg-info
+*.egg
+build/
+dist/
 .DS_Store

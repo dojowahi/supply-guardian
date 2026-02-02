@@ -7,8 +7,10 @@ from .models import Node, Product, Shipment, Disruption
 sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 
+from sqlalchemy.pool import NullPool
+
 connect_args = {"check_same_thread": False}
-engine = create_engine(sqlite_url, echo=False, connect_args=connect_args)
+engine = create_engine(sqlite_url, echo=False, connect_args=connect_args, poolclass=NullPool)
 
 def get_session():
     with Session(engine) as session:

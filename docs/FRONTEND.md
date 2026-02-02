@@ -127,3 +127,16 @@ The frontend polls `http://localhost:8000` every 2 seconds.
 1.  `GET /network/nodes`: Static infrastructure (Ports, Warehouses).
 2.  `GET /shipments`: Moving assets (poll this!).
 3.  `GET /network/disruptions`: Global event zones.
+
+---
+
+## ☁️ Deployment Configuration
+
+### Nginx Proxy (Production)
+In production (e.g., Cloud Run), Nginx serves the static files and proxies API requests.
+*   **File**: `nginx.conf.template`
+*   **Logic**: Using `envsubst`, the `${BACKEND_URL}` is injected at runtime.
+*   **Cloud Run Note**: We deliberately **do not** forward the `Host` header (`proxy_set_header Host $host;`) to the backend. Cloud Run requires the Host header to match the target service's URL, not the frontend's custom domain.
+
+### Build Verification (.npmrc)
+An `.npmrc` file is included in the project root to force the use of the public npm registry (`registry.npmjs.org`). This prevents build failures in environments with internal private registries.

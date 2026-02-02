@@ -28,7 +28,10 @@ backend_supply_api/
 ```
 
 **Business Logic Rules (CRITICAL)**:
-1.  **Database**: Use SQLite (`database.db`). On startup, check if tables are empty. If yes, load data from `data/*.json` into the DB tables.
+1.  **Database**: Use SQLite (`database.db`).
+    *   **CRITICAL**: Use `poolclass=NullPool` in `create_engine` to avoid connection timeouts in multi-threaded/async environments like Cloud Run (since SQLite doesn't handle pooling well).
+    *   **Deployment**: Ensure a `.dockerignore` file exists and excludes `database.db` so that everyday deploys to Cloud Run start with a fresh state (reloading from JSON).
+    *   On startup, check if tables are empty. If yes, load data from `data/*.json` into the DB tables.
 2.  **Quotations (`GET /actions/quotes/{id}`)**:
     *   Calculate generic "Air" (Expensive, Fast) vs "Sea" (Cheap, Slow) options based on `shipment.total_value_at_risk`.
     *   **Disruption Awareness**: If a shipment is within `radius_km` of a "Strike" disruption, do NOT offer standard Air/Sea options from that location. Instead, offer "Alt-Origin" options (e.g., source from Shanghai instead).

@@ -1,0 +1,37 @@
+
+server {
+    listen ${PORT};
+    server_name localhost;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # API Proxies
+    location /network {
+        proxy_pass ${BACKEND_URL};
+
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /shipments {
+        proxy_pass ${BACKEND_URL};
+
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /products {
+        proxy_pass ${BACKEND_URL};
+
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /actions {
+        proxy_pass ${BACKEND_URL};
+
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}

@@ -30,4 +30,4 @@ ENV PORT=9090
 
 # Run the agent API server
 # We use the PORT environment variable for Cloud Run compatibility
-CMD uv run adk api_server supply_agent --allow_origins=* --port=$PORT --host=0.0.0.0
+CMD uv run adk web --port $PORT --host 0.0.0.0

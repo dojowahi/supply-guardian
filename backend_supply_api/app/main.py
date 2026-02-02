@@ -19,6 +19,10 @@ app.include_router(network.router)
 app.include_router(shipments.router)
 app.include_router(actions.router)
 
+@app.get("/")
+def read_root():
+    return {"message": "Supply Chain Guardian API"}
+
 @app.on_event("startup")
 def on_startup():
     init_db()
