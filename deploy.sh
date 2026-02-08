@@ -112,14 +112,15 @@ fi
 # STEP 2: Deploy Backend
 # ------------------------------------------------------------------
 STEP_NAME="deploy_backend"
+SERVICE_NAME="hackathon-supply-backend"
 if is_step_done "$STEP_NAME" && [ -n "$SAVED_BACKEND_URL" ]; then
     success "Step 2: Backend already deployed. URL: $SAVED_BACKEND_URL"
     BACKEND_URL="$SAVED_BACKEND_URL"
 else
-    log "Step 2: Deploying Backend API (backend-supply-api)..."
+    log "Step 2: Deploying Backend API ($SERVICE_NAME)..."
     log "This may take a few minutes..."
     
-    gcloud run deploy backend-supply-api \
+    gcloud run deploy "$SERVICE_NAME" \
         --source ./backend_supply_api \
         --region "$REGION" \
         --allow-unauthenticated \
@@ -127,7 +128,7 @@ else
         --impersonate-service-account "$SERVICE_ACCOUNT"
 
     # Retrieve and verify URL
-    BACKEND_URL=$(gcloud run services describe backend-supply-api --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
+    BACKEND_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
     
     if [ -z "$BACKEND_URL" ]; then
         error "Failed to retrieve Backend URL. Deployment might have failed."
@@ -141,39 +142,109 @@ else
 fi
 
 # ------------------------------------------------------------------
-# STEP 3: Deploy Agents
+# Pre-requisites for Agents
 # ------------------------------------------------------------------
-STEP_NAME="deploy_agents"
-if is_step_done "$STEP_NAME"; then
-    success "Step 3: Agents already deployed. Skipping."
+# Check for API Key (Required for Agents API and Dev UI)
+if [ -z "$GOOGLE_API_KEY" ]; then
+    # Try to find it in environment or prompt
+    if [ -f .env ]; then
+        GOOGLE_API_KEY=$(grep GOOGLE_API_KEY .env | cut -d '=' -f2)
+    fi
+    if [ -z "$GOOGLE_API_KEY" ]; then
+        # Check if saved in deploy.env (unlikely but possible if we decided to save it, relying on .env is better)
+        echo "Searching for API Key..."
+    fi
+fi
+
+# We don't exit here if missing, because maybe the user wants to skip agents if they fail? 
+# But the steps below require it.
+if [ -z "$GOOGLE_API_KEY" ]; then
+    warning "GOOGLE_API_KEY not found in environment. Agents deployment might fail or require manual input."
+    # We will prompt if needed inside the block? No, better to prompt once here.
+    read -sp "Enter your GOOGLE_API_KEY (or press Enter to skip/fail): " GOOGLE_API_KEY
+    echo ""
+fi
+
+
+# ------------------------------------------------------------------
+# STEP 3a: Deploy Agents API
+# ------------------------------------------------------------------
+STEP_NAME="deploy_agents_api"
+SERVICE_NAME="hackathon-supply-agents-api"
+if is_step_done "$STEP_NAME" && [ -n "$SAVED_AGENT_API_URL" ]; then
+    success "Step 3a: Agents API already deployed. URL: $SAVED_AGENT_API_URL"
+    AGENT_API_URL="$SAVED_AGENT_API_URL"
 else
-    log "Step 3: Deploying Agents Service (supply-agents)..."
+    log "Step 3a: Deploying Agents API ($SERVICE_NAME)..."
     log "Linking to Backend: $BACKEND_URL"
+
+    if [ -z "$GOOGLE_API_KEY" ]; then
+        error "GOOGLE_API_KEY is required for Agents."
+        exit 1
+    fi
+
+    # Deploy API Server content
+    gcloud run deploy "$SERVICE_NAME" \
+        --source ./agents \
+        --region "$REGION" \
+        --allow-unauthenticated \
+        --port 8081 \
+        --set-env-vars "BACKEND_URL=$BACKEND_URL,GOOGLE_API_KEY=$GOOGLE_API_KEY" \
+        --command "uv" \
+        --args "run,adk,api_server,supply_agent,--allow_origins=*,--port=8081,--host=0.0.0.0" \
+        --impersonate-service-account "$SERVICE_ACCOUNT"
+        
+    AGENT_API_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
     
-    gcloud run deploy supply-agents \
+    echo "SAVED_AGENT_API_URL=$AGENT_API_URL" >> "$ENV_FILE"
+    mark_step_done "$STEP_NAME"
+    success "Agents API deployed at: $AGENT_API_URL"
+fi
+
+# ------------------------------------------------------------------
+# STEP 3b: Deploy Agents Dev UI
+# ------------------------------------------------------------------
+STEP_NAME="deploy_agents_ui"
+SERVICE_NAME="hackathon-supply-agents-ui"
+if is_step_done "$STEP_NAME"; then
+    success "Step 3b: Agents Dev UI already deployed. Skipping."
+else
+    log "Step 3b: Deploying Agents Dev UI ($SERVICE_NAME)..."
+    
+     if [ -z "$GOOGLE_API_KEY" ]; then
+        error "GOOGLE_API_KEY is required for Agents."
+        exit 1
+    fi
+
+    gcloud run deploy "$SERVICE_NAME" \
         --source ./agents \
         --region "$REGION" \
         --allow-unauthenticated \
         --port 9090 \
-        --set-env-vars BACKEND_URL="$BACKEND_URL" \
+        --set-env-vars "BACKEND_URL=$BACKEND_URL,GOOGLE_API_KEY=$GOOGLE_API_KEY" \
+        --command "uv" \
+        --args "run,adk,web,--port=9090,--host=0.0.0.0" \
         --impersonate-service-account "$SERVICE_ACCOUNT"
-        
+
+    AGENTS_UI_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
+    
     mark_step_done "$STEP_NAME"
-    success "Agents service deployed successfully."
+    success "Agents Dev UI deployed at: $AGENTS_UI_URL"
 fi
 
 # ------------------------------------------------------------------
-# STEP 4: Deploy Frontend
+# STEP 4: Deploy Main Frontend
 # ------------------------------------------------------------------
 STEP_NAME="deploy_frontend"
+SERVICE_NAME="hackathon-supply-frontend"
 if is_step_done "$STEP_NAME" && [ -n "$SAVED_FRONTEND_URL" ]; then
      success "Step 4: Frontend already deployed. URL: $SAVED_FRONTEND_URL"
      FRONTEND_URL="$SAVED_FRONTEND_URL"
 else
-    log "Step 4: Deploying Frontend Application (frontend-supply-app)..."
+    log "Step 4: Deploying Main Frontend ($SERVICE_NAME)..."
     log "Linking to Backend: $BACKEND_URL"
 
-    gcloud run deploy frontend-supply-app \
+    gcloud run deploy "$SERVICE_NAME" \
         --source ./frontend_supply_api \
         --region "$REGION" \
         --allow-unauthenticated \
@@ -182,7 +253,7 @@ else
         --impersonate-service-account "$SERVICE_ACCOUNT"
 
     # Retrieve URL
-    FRONTEND_URL=$(gcloud run services describe frontend-supply-app --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
+    FRONTEND_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
     
     # Save state
     echo "SAVED_FRONTEND_URL=$FRONTEND_URL" >> "$ENV_FILE"
@@ -190,10 +261,40 @@ else
     success "Frontend deployed at: $FRONTEND_URL"
 fi
 
+# ------------------------------------------------------------------
+# STEP 5: Deploy Agentic UI
+# ------------------------------------------------------------------
+STEP_NAME="deploy_agentic_ui"
+SERVICE_NAME="hackathon-supply-agentic-ui"
+if is_step_done "$STEP_NAME" && [ -n "$SAVED_AGENTIC_UI_URL" ]; then
+    success "Step 5: Agentic UI already deployed. URL: $SAVED_AGENTIC_UI_URL"
+    AGENTIC_UI_URL="$SAVED_AGENTIC_UI_URL"
+else
+    log "Step 5: Deploying Agentic UI ($SERVICE_NAME)..."
+    log "Linking to Agent API: $AGENT_API_URL"
+
+    gcloud run deploy "$SERVICE_NAME" \
+        --source ./agentic_ui \
+        --region "$REGION" \
+        --allow-unauthenticated \
+        --port 8080 \
+        --set-env-vars "AGENT_API_URL=$AGENT_API_URL,BACKEND_URL=$BACKEND_URL" \
+        --impersonate-service-account "$SERVICE_ACCOUNT"
+
+    AGENTIC_UI_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$REGION" --format 'value(status.url)' --impersonate-service-account "$SERVICE_ACCOUNT")
+    
+    echo "SAVED_AGENTIC_UI_URL=$AGENTIC_UI_URL" >> "$ENV_FILE"
+    mark_step_done "$STEP_NAME"
+    success "Agentic UI deployed at: $AGENTIC_UI_URL"
+fi
+
 echo "========================================================"
 echo -e "${GREEN}Deployment Complete!${NC}"
 echo "--------------------------------------------------------"
-echo -e "Backend:  $BACKEND_URL"
-echo -e "Frontend: $FRONTEND_URL"
+echo -e "Backend:    $BACKEND_URL"
+echo -e "Agents API: $AGENT_API_URL"
+echo -e "Agents UI:  $AGENTS_UI_URL"
+echo -e "Frontend:   $FRONTEND_URL"
+echo -e "Agentic UI: $AGENTIC_UI_URL"
 echo "--------------------------------------------------------"
 echo "To restart from scratch, run: ./deploy.sh --redeploy-all"

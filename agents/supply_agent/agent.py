@@ -4,7 +4,8 @@ from google.adk.agents import Agent
 from .sub_agents import (
     investigative_agent,
     strategize_agent,
-    consult_and_execute_agent
+    consult_and_execute_agent,
+    snapshot_agent
 )
 
 # --- Logging ---
@@ -23,7 +24,14 @@ root_agent = Agent(
     
     Your Standard Operating Procedure (SOP):
     
-    1. **Investigate**: Call the `investigative_agent` to find stuck shipments and present them.
+    **SPECIAL CASE: SNAPSHOT**
+    - If the user asks for "Get Initial Snapshot" or "Get Dashboard Data", call the `snapshot_agent` immediately.
+    - Do NOT add conversational text to the JSON output from `snapshot_agent`.
+
+    **NORMAL CONVERSATION:**
+    1. **Investigate**: You have NO internal knowledge of shipments. You MUST call the `investigative_agent` to find stuck shipments.
+       - NEVER make up shipment IDs (like XYZ-123).
+       - If `investigative_agent` returns nothing, report "No stuck shipments found".
     2. **Wait for Selection**: Ensure a shipment is selected.
     3. **Strategize**: Call the `strategize_agent` to analyze options and propose a solution.
     4. **Consult & Execute**: 
@@ -37,6 +45,7 @@ root_agent = Agent(
     sub_agents=[
         investigative_agent,
         strategize_agent,
-        consult_and_execute_agent
+        consult_and_execute_agent,
+        snapshot_agent
     ]
 )

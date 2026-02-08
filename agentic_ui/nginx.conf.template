@@ -1,0 +1,37 @@
+
+server {
+    listen ${PORT};
+    server_name localhost;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Google DNS Resolver (Required for dynamic proxy pass if domain changes, though variables are usually static here)
+    resolver 8.8.8.8;
+
+    # Agent API Proxy
+    location /api/ {
+        # Debug Header
+        add_header X-Debug-Location "api" always;
+        
+        # Trailing slash is important to strip /api/ from the forwarded request
+        proxy_pass ${AGENT_API_URL}/;
+        proxy_ssl_server_name on;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Backend API Proxy
+    location /backend/ {
+        # Debug Header
+        add_header X-Debug-Location "backend" always;
+
+        # Trailing slash is important to strip /backend/ from the forwarded request
+        proxy_pass ${BACKEND_URL}/;
+        proxy_ssl_server_name on;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}

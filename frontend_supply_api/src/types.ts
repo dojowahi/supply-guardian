@@ -34,6 +34,7 @@ export interface Shipment {
   status: ShipmentStatus;
   transport_mode: TransportMode;
   priority: 'Normal' | 'Critical';
+  origin_id: string; // Added to match backend
   current_location: Location;
   contents: ShipmentItem[];
   total_value_at_risk: number;

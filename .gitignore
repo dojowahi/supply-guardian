@@ -27,3 +27,6 @@ agents.egg-info/
 .deploy.env
 .deploy_state
 deploy.log
+
+# Reference
+reference_repo/

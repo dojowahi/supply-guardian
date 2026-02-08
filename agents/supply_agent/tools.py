@@ -19,6 +19,19 @@ def get_stuck_shipments():
         print(f"[TOOL] {error_msg}")
         return {"error": error_msg}
 
+def get_all_shipments():
+    """Fetches all active shipments regardless of status."""
+    url = f"{BACKEND_URL}/shipments"
+    print(f"[TOOL] Requesting: {url} (All)")
+    try:
+        response = httpx.get(url)
+        response.raise_for_status()
+        data = response.json()
+        print(f"[TOOL] Success. Found {len(data)} total shipments.")
+        return data
+    except Exception as e:
+        return {"error": f"Failed to fetch shipments: {str(e)}"}
+
 def get_disruption_context():
     """Fetches current disruptions to understand why shipments are stuck."""
     url = f"{BACKEND_URL}/network/disruptions"
@@ -74,3 +87,14 @@ def get_products():
         return response.json()
     except Exception as e:
         return {"error": str(e)}
+
+def get_network_nodes():
+    """Fetches all network nodes (ports, warehouses, etc.) with coordinates."""
+    url = f"{BACKEND_URL}/network/nodes"
+    print(f"[TOOL] Requesting: {url}")
+    try:
+        response = httpx.get(url)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        return {"error": f"Failed to fetch nodes: {str(e)}"}
