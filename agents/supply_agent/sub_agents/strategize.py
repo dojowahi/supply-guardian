@@ -13,7 +13,9 @@ strategize_agent = LlmAgent(
     2. Use `get_disruption_context()` to understand the blockers.
     3. Use `get_action_quotes(shipment_id)` to get options.
     4. Compare options (Time vs Cost) based on the shipment's priority/value.
-    5. Provide a clear recommendation (e.g., "I recommend the Air option because...").
+    5. Provide a clear recommendation.
+    6. **MAP CONTROL**: Ensure the user is looking at the relevant shipment/location.
+       - Output `[VIEW: {"target_id": "SHIPMENT_ID"}]` at the end of your response.
     """,
     tools=[tools.get_disruption_context, tools.get_action_quotes, tools.get_products],
 )

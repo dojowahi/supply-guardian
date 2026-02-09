@@ -6,6 +6,7 @@
 - **Core Pattern**:
   - **Left Pane (Snapshot/Context)**: Visualizes the "World State" relevant to the conversation. It updates dynamically by refetching data from the backend after agent actions.
   - **Right Pane (Chat)**: A conversational interface to interact with the `SupplyAgent`.
+  - **Map Control**: The agent can autonomously control the map view (pan/zoom) to focus on specific shipments, nodes, or regions using structured tokens.
 - **Tech Stack**:
   - **Frontend**: Vite + React + Tailwind CSS + Framer Motion + Lucide React.
   - **Maps**: Google Maps Platform (@vis.gl/react-google-maps).
@@ -61,8 +62,10 @@ The `supply_agent` acts as the Coordinator.
    - Analyzes tool outputs.
    - Performs investigations (reads DB).
    - Responds with text: "Shipment XYZ is delayed at Rotterdam due to..."
+   - **Optionally** includes `[VIEW: ...]` token to focus the map.
 4. **Frontend**:
-   - Displays agent response.
+   - Parses `[VIEW]` token and updates map camera (center/zoom).
+   - Displays agent response (stripped of token).
    - **Immediately refetches** `getSnapshot()` from Data Backend.
    - Updates `SnapshotRenderer` with fresh data (e.g. status changes, new delay info).
 

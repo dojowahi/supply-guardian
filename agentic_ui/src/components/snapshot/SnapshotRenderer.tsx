@@ -4,9 +4,10 @@ import type { SupplySnapshotData } from '../../lib/types';
 
 interface SnapshotRendererProps {
   data: SupplySnapshotData | null;
+  mapView: { center: { lat: number; lng: number }; zoom: number } | null;
 }
 
-export const SnapshotRenderer: React.FC<SnapshotRendererProps> = ({ data }) => {
+export const SnapshotRenderer: React.FC<SnapshotRendererProps> = ({ data, mapView }) => {
   // Calculate summary stats
   const activeShipments = data?.shipments?.length || 0;
   const delayedCount = data?.shipments?.filter(s => s.status === 'Delayed' || s.status === 'Stuck').length || 0;
@@ -89,6 +90,8 @@ export const SnapshotRenderer: React.FC<SnapshotRendererProps> = ({ data }) => {
           shipments={data?.shipments || []}
           disruptions={data?.disruptions || []}
           nodes={data?.nodes || []}
+          center={mapView?.center}
+          zoom={mapView?.zoom}
         />
 
         {/* Loading Overlay */}

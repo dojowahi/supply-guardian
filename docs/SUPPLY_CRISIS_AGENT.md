@@ -15,6 +15,7 @@ The system uses a **Hierarchical Team** pattern orchestrated by a root agent (`s
     2.  **Wait**: Ensure user selection.
     3.  **Strategize**: Formulate a plan.
     4.  **Execute**: Verify approval and action the plan.
+    5.  **Map Control**: Throughout the process, the agent autonomously updates the dashboard map to focus on relevant items.
 
 ---
 
@@ -70,6 +71,19 @@ The agents interact with the backend via `tools.py`, which wraps REST API endpoi
 - `GET /network/disruptions`: Context for decision making.
 - `GET /actions/quotes/{id}`: Solution space.
 - `POST /actions/reroute`: Action execution.
+
+## Map Control Protocol
+The agents use a special token protocol to control the frontend map view. This allows the agent to "point" at things during the conversation.
+
+**Token Format:** `[VIEW: JSON_DATA]`
+
+**Supported Patterns:**
+1.  **Focus Shipment**: `[VIEW: {"target_id": "SH-1002"}]`
+    *   Zooms to the shipment's current coordinates.
+2.  **Focus Node**: `[VIEW: {"target_id": "PORT-NYC"}]`
+    *   Zooms to the port/warehouse location.
+3.  **Focus Region**: `[VIEW: {"lat": 34.05, "lng": -118.2, "zoom": 8}]`
+    *   Pans and zooms to arbitrary coordinates.
 
 ## Flow Diagram
 

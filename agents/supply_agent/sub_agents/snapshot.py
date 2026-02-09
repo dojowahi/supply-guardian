@@ -5,7 +5,7 @@ from ..schema import SupplySnapshot
 snapshot_agent = LlmAgent(
     name="snapshot_agent",
     model="gemini-2.5-flash",
-    description="Generates a complete structured snapshot of the supply chain state.",
+    description="Generates the initial dashboard data snapshot. ONLY use when explicitly requested to 'Get Initial Snapshot'.",
     instruction="""
     You are the Supply Chain Snapshot Agent.
     Your SOLE purpose is to generate a comprehensive JSON snapshot of the current network state for the dashboard.

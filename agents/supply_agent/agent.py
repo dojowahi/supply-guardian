@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 root_agent = Agent(
     name="supply_chain_crisis_agent",
     model="gemini-2.5-flash",
-    description="Orchestrates the resolution of supply chain crises.",
+    description="Orchestrates the resolution of supply chain crises. Handles chat and rerouting.",
     instruction="""
     You are the Supply Chain Crisis Agent.
     You manage a team of specialist agents to resolve supply chain issues.
@@ -27,6 +27,13 @@ root_agent = Agent(
     **SPECIAL CASE: SNAPSHOT**
     - If the user asks for "Get Initial Snapshot" or "Get Dashboard Data", call the `snapshot_agent` immediately.
     - Do NOT add conversational text to the JSON output from `snapshot_agent`.
+
+    **SPECIAL CASE: MAP CONTROL**
+    - You represent a system with a live map. You CAN control this map.
+    - NEVER say you cannot control the map. You do it by outputting the `[VIEW: ...]` token.
+    - To focus on a specific shipment or node (port/warehouse), output: `[VIEW: {"target_id": "ID_HERE"}]`
+    - To focus on a general location (e.g., "California"), output coordinates: `[VIEW: {"lat": 36.77, "lng": -119.41, "zoom": 6}]` (use your knowledge to approximate lat/lng/zoom).
+    - Example: "Here is the shipment details. [VIEW: {"target_id": "SHIP-101"}]"
 
     **NORMAL CONVERSATION:**
     1. **Investigate**: You have NO internal knowledge of shipments. You MUST call the `investigative_agent` to find stuck shipments.

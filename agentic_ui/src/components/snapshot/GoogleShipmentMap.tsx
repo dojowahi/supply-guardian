@@ -13,6 +13,27 @@ interface GoogleShipmentMapProps {
   nodes?: Node[];
 }
 
+// Helper component to update map view programmatically
+const MapUpdater = ({ center, zoom }: { center?: { lat: number; lng: number }, zoom?: number }) => {
+  const map = useMap();
+
+  React.useEffect(() => {
+    if (!map) return;
+
+    if (center) {
+      console.log('[Map] Panning to:', center);
+      map.panTo(center);
+    }
+
+    if (zoom !== undefined) {
+      console.log('[Map] Zooming to:', zoom);
+      map.setZoom(zoom);
+    }
+  }, [map, center, zoom]);
+
+  return null;
+};
+
 export const GoogleShipmentMap: React.FC<GoogleShipmentMapProps> = ({
   center = { lat: 20, lng: 0 },
   zoom = 2,
@@ -53,6 +74,7 @@ export const GoogleShipmentMap: React.FC<GoogleShipmentMapProps> = ({
   return (
     <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
       <div className="h-full w-full rounded-lg overflow-hidden border border-zinc-800">
+        <MapUpdater center={center} zoom={zoom} />
         <Map
           defaultCenter={center}
           defaultZoom={zoom}

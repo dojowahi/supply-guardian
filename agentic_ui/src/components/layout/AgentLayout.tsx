@@ -4,13 +4,13 @@ import { SnapshotRenderer } from '../snapshot/SnapshotRenderer';
 import { useSupplyAgent } from '../../hooks/useSupplyAgent';
 
 export const AgentLayout: React.FC = () => {
-  const { messages, sendMessage, snapshotData, isThinking } = useSupplyAgent();
+  const { messages, sendMessage, snapshotData, isThinking, mapView } = useSupplyAgent();
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-gray-50 text-gray-900">
       {/* Main Content Area (3/4) */}
       <div className="w-[75%] h-full border-r border-gray-200 relative">
-        <SnapshotRenderer data={snapshotData} />
+        <SnapshotRenderer data={snapshotData} mapView={mapView} />
       </div>
 
       {/* Agent Sidebar (1/4) */}
