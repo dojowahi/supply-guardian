@@ -93,11 +93,18 @@ export function useSupplyAgent() {
           // NOTE: relying on 'snapshotData' state here.
           const findTarget = (data: SupplySnapshotData | null) => {
             if (!data) return null;
+
+            // 1. Try Shipments
             const shipment = data.shipments.find(s => s.id === viewData.target_id);
             if (shipment?.coordinates) return { center: shipment.coordinates, zoom: 6 };
 
+            // 2. Try Nodes (Ports/Warehouses)
             const node = data.nodes?.find(n => n.id === viewData.target_id);
             if (node?.coordinates) return { center: node.coordinates, zoom: 10 };
+
+            // 3. Try Disruptions
+            const disruption = data.disruptions?.find(d => d.id === viewData.target_id);
+            if (disruption?.coordinates) return { center: disruption.coordinates, zoom: 7 };
 
             return null;
           };
